@@ -56,22 +56,14 @@ public class Play extends AppCompatActivity {
     private static final int SUPPRESSION_MS = 1500;
     private static final int MINIMUM_COUNT = 3;
     public int current_image = 0;
+    public TextView modelTest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        modelTest = (TextView)findViewById(R.id.modelTest);
         ImageView im = (ImageView) findViewById(R.id.image);
         im.setImageDrawable(images[0]);
-        ImageButton quit = (ImageButton) findViewById(R.id.home);
-        quit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
-            }
-        });
-        configureNewSongButton();
         BufferedReader br = null;
         try{
             br = new BufferedReader(new InputStreamReader(getAssets().open("labels.txt")));
@@ -95,18 +87,13 @@ public class Play extends AppCompatActivity {
                         MINIMUM_TIME_BETWEEN_SAMPLES_MS);
 
         inferenceInterface = new TensorFlowInferenceInterface(getAssets(), MODEL_FILENAME);
+        //modelTest.setText("inferenceInterface loaded");
         requestMicrophonePermission();
+        //modelTest.setText("start record function");
         startRecording();
+        //modelTest.setText("start recognizing");
         startRecognition();
-    }
-    private void configureNewSongButton(){
-        ImageButton nextButton = (ImageButton) findViewById(R.id.newSong);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Play.this,MainActivity.class));
-            }
-        });
+
     }
 
     private void requestMicrophonePermission() {
@@ -173,6 +160,7 @@ public class Play extends AppCompatActivity {
         }
 
         record.startRecording();
+        modelTest.setText("start recording");
         while(shouldContinue){
             int numberRead = record.read(audioBuffer,0,audioBuffer.length);
             int maxLength = recordingBuffer.length;
@@ -190,6 +178,7 @@ public class Play extends AppCompatActivity {
         }
         record.stop();
         record.release();
+
     }
     public synchronized void startRecognition() {
         if (recognitionThread != null) {
@@ -217,7 +206,7 @@ public class Play extends AppCompatActivity {
 
     private void recognize() {
         Log.v(LOG_TAG, "Start recognition");
-
+        //modelTest.setText("start recognition");
         short[] inputBuffer = new short[RECORDING_LENGTH];
         float[] floatInputBuffer = new float[RECORDING_LENGTH];
         final float[] outputScores = new float[labels.size()];
@@ -247,6 +236,7 @@ public class Play extends AppCompatActivity {
             }
 
             // Run the model.
+            //modelTest.setText("start running the model");
             inferenceInterface.feed(SAMPLE_RATE_NAME, sampleRateList);
             inferenceInterface.feed(INPUT_DATA_NAME, floatInputBuffer, RECORDING_LENGTH, 1);
             inferenceInterface.run(outputScoresNames);
@@ -262,11 +252,13 @@ public class Play extends AppCompatActivity {
                         // Assign each value to String array
                         newLabels[j] = labels.get(j);
                     }
+                    //modelTest.setText("run through smoother");
                     if(!result.foundCommand.startsWith("_") && result.isNewCommand){
                         int labelIndex = -1;
                         for(int j = 0;j<labels.size();j++){
                             if(labels.get(j).equals(result.foundCommand)){
                                 labelIndex = j;
+                                modelTest.setText(newLabels[labelIndex]+" "+outputScores[labelIndex]);
                                 if(newLabels[labelIndex]==newLabels[11] && current_image!=images.length-1){
                                     current_image++;
                                     im.setImageDrawable(images[current_image]);

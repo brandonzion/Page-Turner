@@ -15,16 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".startPage">
+        </activity>
+        <activity android:name=".Play"/>
+        <activity android:name=".pictures" />
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".instructions"/>
+        <activity android:name=".startInstructions">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Play"/>
-        <activity android:name=".pictures" />
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".instructions"/>
     </application>
 
 </manifest>
