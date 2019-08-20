@@ -11,17 +11,16 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class startInstructions extends AppCompatActivity {
-    Boolean checked;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startnstructions);
-        SharedPreferences isChecked = getSharedPreferences("checkbox",0);
-        checked = isChecked.getBoolean("isChecked",false);
+        configureCheckBox();
+        SharedPreferences prefs = getSharedPreferences("skipIntroCheckbox",0);
+        boolean checked = prefs.getBoolean("skipIntro", false);
         if(checked){
             startActivity(new Intent(startInstructions.this,startPage.class));
         }
-        configureCheckBox();
         configureHomeButton();
     }
     private void configureHomeButton(){
@@ -39,12 +38,10 @@ public class startInstructions extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 boolean checked = ((CheckBox) v).isChecked();
-                if(checked){
-                    SharedPreferences sharedPreferences = getSharedPreferences("checkbox",0);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isChecked",true);
-                    editor.commit();
-                }
+                SharedPreferences sharedPreferences = getSharedPreferences("skipIntroCheckbox",0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("skipIntro", checked);
+                editor.commit();
 
             }
         });
