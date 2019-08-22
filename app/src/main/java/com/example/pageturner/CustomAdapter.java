@@ -14,9 +14,9 @@ public class CustomAdapter extends BaseAdapter {
     Context context;
     Drawable[] imageList;
     private static LayoutInflater inflater=null;
-    public CustomAdapter(pictures pictures, String[] imageNames, Drawable[] images){
+    public CustomAdapter(startPage startPage, String[] imageNames, Drawable[] images){
         result = imageNames;
-        context = pictures;
+        context = startPage;
         imageList = images;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

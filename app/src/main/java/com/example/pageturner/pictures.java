@@ -52,18 +52,18 @@ public class pictures extends AppCompatActivity {
         try {
             File[] files = new File("/data/data/com.example.pageturner/app_songs").listFiles();
             for(int i=0;i<files.length;i++){
-                if(files[i].getName().substring(0,6).equals("page_1")){
-                    fileNames.add(files[i].getName());
-                }
+                //if(files[i].getName().substring(0,6).equals("page_1")){
+                    //fileNames.add(files[i].getName());
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(files[i]));
+                pages.add(new BitmapDrawable(getResources(),b));
+                //}
             }
             String[] newFileNames = new String[fileNames.size()];
             newFileNames = fileNames.toArray(newFileNames);
+            /*
             for(int i=0;i<fileNames.size();i++){
-                File f=new File(directory, newFileNames[i]);
-                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
-                pages.add(new BitmapDrawable(getResources(),b));
 
-            }
+            }*/
             newPages = new Drawable[pages.size()];
             newPages = pages.toArray(newPages);
         }
@@ -72,7 +72,7 @@ public class pictures extends AppCompatActivity {
             e.printStackTrace();
         }
         lv = (ListView)findViewById(R.id.listView);
-        lv.setAdapter(new CustomAdapter(this,imageNames,newPages));
+        //lv.setAdapter(new CustomAdapter(this,imageNames,newPages));
     }
     private void configureBackButton(){
         ImageButton backButton = (ImageButton) findViewById(R.id.home);
