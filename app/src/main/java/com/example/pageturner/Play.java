@@ -29,7 +29,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
 public class Play extends AppCompatActivity {
-    Drawable[] images = pictures.getData();
+    Drawable[] images;
     List<String> labels = new ArrayList<String>();
     private static final String LABEL_FILENAME = "file:///android_asset/labels.txt";
     private static final String MODEL_FILENAME = "file:///android_asset/model_18000.pb";
@@ -61,6 +61,10 @@ public class Play extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
+        playList toBeImages = (playList)getApplication();
+        Drawable[] newImages = new Drawable[toBeImages.playList.size()];
+        newImages = toBeImages.playList.toArray(newImages);
+        images = newImages;
         modelTest = (TextView)findViewById(R.id.modelTest);
         ImageView im = (ImageView) findViewById(R.id.image);
         im.setImageDrawable(images[0]);

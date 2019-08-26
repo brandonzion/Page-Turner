@@ -18,5 +18,12 @@
         android:textColor="#000000"
         android:textSize="25dp" />
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="136dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1" />
+
 
 </LinearLayout>

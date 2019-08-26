@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,11 +21,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class startPage extends AppCompatActivity {
     ListView lv;
     ArrayList<Drawable> pages = new ArrayList<Drawable>();
     Drawable[] newPages;
+    Drawable[] newPlayList;
+    CustomAdapter adapter;
+    playList showPlayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +52,15 @@ public class startPage extends AppCompatActivity {
         }
         newPages = new Drawable[pages.size()];
         newPages = pages.toArray(newPages);
-        lv = (ListView)findViewById(R.id.showImages);
-        lv.setAdapter(new CustomAdapter(this,imageNames,newPages));
+        showPlayList = (playList)getApplication();
+        newPlayList = new Drawable[showPlayList.playList.size()];
+        newPlayList = showPlayList.playList.toArray(newPlayList);
+        ListView lv = (ListView)findViewById(R.id.showImages);
+        adapter = new CustomAdapter(this,imageNames,pages);
+        lv.setAdapter(adapter);
+        lv.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lv.setItemChecked(2,true);
+
         configureStartButton();
         configureInstructionButton();
     }
@@ -59,6 +71,7 @@ public class startPage extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                showPlayList.playList= adapter.getCheckedItems();
                 startActivity(new Intent(startPage.this,MainActivity.class));
             }
         });

@@ -30,6 +30,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     static ArrayList<Bitmap> files = new ArrayList<>();
     int numberOfSongs;
     Bitmap[] newFiles;
+    Drawable[] newPlayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
             Bitmap thumbnail = (Bitmap)data.getExtras().get("data");
             files.add(thumbnail);
             Drawable drawable = new BitmapDrawable(getResources(), thumbnail);
+            playList cameraPlayList = (playList)getApplication();
+            cameraPlayList.playList.add(drawable);
             ImageView image = (ImageView)findViewById(R.id.imageView);
             image.setImageDrawable(drawable);
             images.add(drawable);

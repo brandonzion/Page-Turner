@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,7 +32,7 @@ public class startInstructions extends AppCompatActivity {
         });
     }
     private void configureCheckBox(){
-        CheckBox chk = (CheckBox) findViewById(R.id.checkBox);
+        CheckBox chk = (CheckBox) findViewById(R.id.checkbox);
         chk.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

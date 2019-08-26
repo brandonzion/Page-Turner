@@ -34,6 +34,7 @@ public class pictures extends AppCompatActivity {
     ArrayList<Drawable> pages = new ArrayList<>();
     Drawable[] newPages;
     ArrayList<String> fileNames = new ArrayList<>();
+    Drawable[] newPlayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,8 @@ public class pictures extends AppCompatActivity {
             e.printStackTrace();
         }
         lv = (ListView)findViewById(R.id.listView);
-        //lv.setAdapter(new CustomAdapter(this,imageNames,newPages));
+
+        //lv.setAdapter(new CustomAdapter(this,imageNames,newPlayList));
     }
     private void configureBackButton(){
         ImageButton backButton = (ImageButton) findViewById(R.id.home);
