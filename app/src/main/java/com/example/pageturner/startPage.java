@@ -9,11 +9,13 @@ import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,11 +32,13 @@ public class startPage extends AppCompatActivity {
     Drawable[] newPlayList;
     CustomAdapter adapter;
     playList showPlayList;
+    Toast toast;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startpage);
         File[] files = new File("/data/data/com.example.pageturner/app_songs").listFiles();
+        toast = Toast.makeText(getApplicationContext(), "You need to choose a page before you can continue.", Toast.LENGTH_SHORT);
         try{
             for(int i=0;i<files.length;i++){
                 File file = files[i];
@@ -63,6 +67,7 @@ public class startPage extends AppCompatActivity {
 
         configureStartButton();
         configureInstructionButton();
+        configurePlayButton();
     }
 
 
@@ -71,8 +76,22 @@ public class startPage extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                showPlayList.playList= adapter.getCheckedItems();
                 startActivity(new Intent(startPage.this,MainActivity.class));
+            }
+        });
+    }
+    private void configurePlayButton(){
+        Button nextButton = (Button) findViewById(R.id.selectedPages);
+        nextButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if(adapter.getCheckedItems().size()!=0){
+                    showPlayList.playList= adapter.getCheckedItems();
+                    startActivity(new Intent(startPage.this,Play.class));
+                }else{
+                    toast.setGravity(Gravity.TOP,0,0);
+                    toast.show();
+                }
             }
         });
     }

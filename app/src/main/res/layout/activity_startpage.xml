@@ -41,14 +41,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/selectedPages"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="201dp"
-        android:layout_marginEnd="38dp"
-        android:text="Play"
-        app:layout_constraintEnd_toStartOf="@+id/create"
+        android:layout_marginStart="161dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginBottom="61dp"
+        android:text="Play Selected Pages"
+        app:layout_constraintBottom_toTopOf="@+id/instructions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/showImages" />
 

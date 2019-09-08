@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 numberOfSongs+=1;
                 SharedPreferences save = getSharedPreferences("numberSongs",0);
                 save.edit().putInt("numberOfSongs",numberOfSongs).commit();
-                startActivity(new Intent(MainActivity.this,pictures.class));
+                startActivity(new Intent(MainActivity.this,Play.class));
             }
         });
     }
